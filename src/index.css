@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ─── Reset & Box Model ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+:root {
+  --color-bg: #050816;
+  --color-bg-alt: #080B12;
+  --color-surface: rgba(255, 255, 255, 0.06);
+  --color-surface-hover: rgba(255, 255, 255, 0.1);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-primary: #14F195;
+  --color-secondary: #9945FF;
+  --color-danger: #FF4D6D;
+  --color-warning: #FACC15;
+  --color-text: #F8FAFC;
+  --color-muted: #94A3B8;
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --radius-2xl: 20px;
+
+  /* Safe-area insets (Android notch / gesture bar) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* Tab bar height — used for bottom padding on scrollable pages */
+  --tab-bar-height: 84px; /* 68px bar + 16px bottom gap */
+}
+
+/* ─── Root Scroll Foundation ─────────────────────────────────────────────── */
+/*
+ * Allow the document to scroll naturally.
+ * ion-app is a flex container by default; we override it to allow full
+ * natural document scrolling rather than relying on IonContent.
+ */
+html {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  /* Do NOT set height: 100% — that would cap scroll at viewport */
+  background: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(20, 241, 149, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(153, 69, 255, 0.05) 0%, transparent 50%);
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Only block horizontal overflow — vertical must remain free */
+  overflow-x: hidden;
+}
+
+/* ─── Ionic Overrides ────────────────────────────────────────────────────── */
+ion-app {
+  background: var(--color-bg) !important;
+  /* Allow ion-app to grow with content instead of being viewport-locked */
+  height: auto !important;
+  min-height: 100vh;
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+  display: block !important;
+}
+
+ion-content {
+  --background: transparent;
+}
+
+ion-header {
+  display: none !important;
+}
+
+/* ─── Scrollbar Styling ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* ─── Glass Card ─────────────────────────────────────────────────────────── */
+.glass-card {
+  background: var(--color-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ─── Typography Helpers ─────────────────────────────────────────────────── */
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary), #00A8E8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(135deg, var(--color-secondary), #F31260);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Layout Utilities ───────────────────────────────────────────────────── */
+
+/* Standard max-width centred container */
+.max-width-container {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Responsive padding */
+.section-padding {
+  padding: clamp(1rem, 5vw, 2.5rem);
+}
+
+/*
+ * Pages that need full-height flex layout (Onboarding, ActiveSession) should
+ * use min-height + overflow-y: auto so they can scroll if content overflows.
+ */
+.page-full {
+  min-height: 100svh; /* svh = small viewport height — shrinks with keyboard */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/*
+ * Standard scrollable page wrapper — use on Dashboard, Profile, etc.
+ * Adds automatic safe-area bottom padding and clears the fixed tab bar.
+ */
+.page-scroll {
+  padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom));
+}
+
+/* Mobile stack — flex row that wraps on narrow screens */
+.mobile-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Wallet address / long text — safe truncation */
+.wallet-address {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
+}
+
+/* Responsive container for modal inner content */
+.responsive-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; filter: blur(10px); }
+  50%       { opacity: 1;   filter: blur(15px); }
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.page-enter {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Glowing Border ─────────────────────────────────────────────────────── */
+.glowing-border {
+  position: relative;
+}
+.glowing-border::after {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* ─── Horizontal Scroll Container ───────────────────────────────────────── */
+.h-scroll {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  gap: 8px;
+  padding-bottom: 4px;
+}
+.h-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Responsive Font Sizes ─────────────────────────────────────────────── */
+.font-hero {
+  font-size: clamp(52px, 17vw, 84px);
+}
+.font-title {
+  font-size: clamp(28px, 8vw, 42px);
+}
+.font-score {
+  font-size: clamp(40px, 13vw, 64px);
+}

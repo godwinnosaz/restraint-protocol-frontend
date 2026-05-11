@@ -1,0 +1,13 @@
+{
+  "appId": "app.restraint.protocol",
+  "appName": "Restraint Protocol",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Restraint Protocol</string>
+    <string name="title_activity_main">Restraint Protocol</string>
+    <string name="package_name">app.restraint.protocol</string>
+    <string name="custom_url_scheme">app.restraint.protocol</string>
+    <string name="accessibility_service_description">Monitors focus sessions to detect blocked apps and content violations.</string>
+</resources>
